@@ -2,6 +2,8 @@
 
 # VUTTR
 
+[![Build Status](https://travis-ci.org/vuttr/vuttr-backend.svg?branch=master)](https://travis-ci.org/vuttr/vuttr-backend) [![Maintainability](https://api.codeclimate.com/v1/badges/e28eaaa9b584b057cd17/maintainability)](https://codeclimate.com/github/vuttr/vuttr-backend/maintainability)
+
 Welcome to the "Very Useful Tools to Remember"!
 
 It's a useful tool you can use to organize your bookmarks in a better way than your browser's bookmark manager. This repository contains only the API. To use the VUTTR, you need to run this and the client application.
