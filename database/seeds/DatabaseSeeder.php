@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tool;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,6 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call('UsersTableSeeder');
+        app('db')->table('tools')->truncate();
+        factory(Tool::class)->times(5)->create();
     }
 }
