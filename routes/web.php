@@ -16,3 +16,4 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('tools', 'ToolsController@index');
+$router->post('tools', 'ToolsController@store');
