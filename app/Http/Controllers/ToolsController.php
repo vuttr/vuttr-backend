@@ -38,6 +38,19 @@ class ToolsController extends Controller
     }
 
     /**
+     * Delete a existing resource.
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function delete(string $id)
+    {
+        Tool::where(['id' => $id])->delete() ?: abort(404);
+
+        return response()->json('', Response::HTTP_NO_CONTENT);
+    }
+
+    /**
      * Validation rules for tools.
      *
      * @return array

@@ -11,9 +11,12 @@
 |
 */
 
+/** @var \Laravel\Lumen\Routing\Router $router */
+
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
 $router->get('tools', 'ToolsController@index');
 $router->post('tools', 'ToolsController@store');
+$router->delete('tools/{tool}', 'ToolsController@delete');
