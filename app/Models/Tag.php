@@ -6,7 +6,7 @@ use App\Models\Concerns\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Tool extends Model
+class Tag extends Model
 {
     use Uuid;
 
@@ -22,15 +22,15 @@ class Tool extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'link', 'description'];
+    protected $fillable = ['name'];
 
     /**
      * Represents a database relationship.
      *
      * @return BelongsToMany
      */
-    public function tags()
+    public function tools()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tool::class);
     }
 }
