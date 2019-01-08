@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tool;
+use App\Serializers\ToolResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
@@ -12,20 +14,20 @@ class ToolsController extends Controller
     /**
      * Show a listing of the resource.
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function index()
     {
         $tools = Tool::latest()->get();
 
-        return response()->json($tools);
+        return (ToolResource::collection($tools))->response();
     }
 
     /**
      * Store a new resource.
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      * @throws ValidationException
      */
     public function store(Request $request)
@@ -34,14 +36,16 @@ class ToolsController extends Controller
 
         $tool = Tool::create($request->all());
 
-        return response()->json($tool, Response::HTTP_CREATED);
+        return (ToolResource::make($tool))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
      * Delete a existing resource.
      *
      * @param string $id
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(string $id)
     {
