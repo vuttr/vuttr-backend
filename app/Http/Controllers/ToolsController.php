@@ -14,11 +14,15 @@ class ToolsController extends Controller
     /**
      * Show a listing of the resource.
      *
+     * @param Request $request
      * @return JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tools = Tool::latest()->with('tags')->get();
+        $tools = Tool::latest()
+            ->hasTag($request->input('tag'))
+            ->with('tags')
+            ->get();
 
         return (ToolResource::collection($tools))->response();
     }
