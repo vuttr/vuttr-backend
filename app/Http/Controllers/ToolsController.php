@@ -14,11 +14,15 @@ class ToolsController extends Controller
     /**
      * Show a listing of the resource.
      *
+     * @param Request $request
      * @return JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tools = Tool::latest()->get();
+        $tools = Tool::latest()
+            ->hasTag($request->input('tag'))
+            ->with('tags')
+            ->get();
 
         return (ToolResource::collection($tools))->response();
     }
@@ -34,7 +38,8 @@ class ToolsController extends Controller
     {
         $this->validate($request, $this->validationRules());
 
-        $tool = Tool::create($request->all());
+        $tool = Tool::create($request->all())
+            ->withTags($request->input('tags', []));
 
         return (ToolResource::make($tool))
             ->response()
@@ -65,6 +70,8 @@ class ToolsController extends Controller
             'title' => ['required', 'min:1', 'max:240'],
             'link' => ['required', 'url', 'min:1', 'max:240'],
             'description' => ['required', 'min:1', 'max:1000'],
+            'tags' => ['nullable', 'array'],
+            'tags.*' => ['required', 'alpha_dash'],
         ];
     }
 }
