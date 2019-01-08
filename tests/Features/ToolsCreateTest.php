@@ -10,7 +10,7 @@ class ToolsCreateTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function testIncludeExistingTool()
+    public function testCreateAndReturnNewTool()
     {
         /** @var Tool $tool */
         $tool = factory(Tool::class)->make();
@@ -28,5 +28,21 @@ class ToolsCreateTest extends TestCase
             'link' => $tool->getAttribute('link'),
             'description' => $tool->getAttribute('description'),
         ]);
+    }
+
+    public function testCreateToolWithTags()
+    {
+        /** @var Tool $tool */
+        $tool = factory(Tool::class)->make();
+
+        $response = $this->post('tools', [
+            'title' => $tool->getAttribute('title'),
+            'link' => $tool->getAttribute('link'),
+            'description' => $tool->getAttribute('description'),
+            'tags' => ['amazing', 'beautiful'],
+        ]);
+
+        $response->assertResponseStatus(201);
+        $this->assertEquals(['amazing', 'beautiful'], Tool::first()->tags()->pluck('name')->toArray());
     }
 }

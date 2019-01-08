@@ -17,6 +17,8 @@ class CreateTagToolPivotTable extends Migration
             $table->uuid('tag_id');
             $table->uuid('tool_id');
             $table->primary(['tag_id', 'tool_id']);
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+            $table->foreign('tool_id')->references('id')->on('tools')->onDelete('cascade');
         });
     }
 

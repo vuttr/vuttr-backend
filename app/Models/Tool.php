@@ -25,6 +25,26 @@ class Tool extends Model
     protected $fillable = ['title', 'link', 'description'];
 
     /**
+     * Attach tags to tool.
+     *
+     * @param array|string ...$tagNames
+     * @return Tool
+     */
+    public function withTags($tagNames)
+    {
+        if (is_string($tagNames)) {
+            $tagNames = func_get_args();
+        }
+
+        $existingTags = Tag::whereIn('name', $tagNames)->pluck('name', 'id');
+        Tag::createTags(array_diff($tagNames, $existingTags->toArray()));
+
+        $this->tags()->sync(Tag::whereIn('name', $tagNames)->pluck('id'));
+
+        return $this;
+    }
+
+    /**
      * Represents a database relationship.
      *
      * @return BelongsToMany

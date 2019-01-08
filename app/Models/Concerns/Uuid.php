@@ -2,6 +2,7 @@
 
 namespace App\Models\Concerns;
 
+use Exception;
 use Ramsey\Uuid\Uuid as Factory;
 
 trait Uuid
@@ -14,7 +15,18 @@ trait Uuid
     public static function bootUuid()
     {
         static::creating(function (self $model) {
-            $model->{$model->getKeyName()} = Factory::uuid4()->toString();
+            $model->{$model->getKeyName()} = static::generateUuid();
         });
+    }
+
+    /**
+     * Generate a new uuid.
+     *
+     * @return string
+     * @throws Exception
+     */
+    public static function generateUuid()
+    {
+        return Factory::uuid4()->toString();
     }
 }
