@@ -18,7 +18,7 @@ class ToolsController extends Controller
      */
     public function index()
     {
-        $tools = Tool::latest()->get();
+        $tools = Tool::latest()->with('tags')->get();
 
         return (ToolResource::collection($tools))->response();
     }

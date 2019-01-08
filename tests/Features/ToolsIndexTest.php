@@ -18,11 +18,12 @@ class ToolsIndexTest extends TestCase
         $response = $this->get('tools');
 
         $response->assertResponseOk();
-        $response->seeJsonStructure(['*' => ['title', 'link', 'description']]);
+        $response->seeJsonStructure(['*' => ['title', 'link', 'description', 'tags']]);
         $response->seeJsonContains([
             'title' => $tool->getAttribute('title'),
             'link' => $tool->getAttribute('link'),
             'description' => $tool->getAttribute('description'),
+            'tags' => $tool->tags()->pluck('name')->toArray(),
         ]);
     }
 }

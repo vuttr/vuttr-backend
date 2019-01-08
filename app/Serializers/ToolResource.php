@@ -21,6 +21,7 @@ class ToolResource extends JsonResource
             'title' => $this->getAttribute('title'),
             'link' => $this->getAttribute('link'),
             'description' => $this->getAttribute('description'),
+            'tags' => $this->tags()->pluck('name'),
         ];
     }
 }

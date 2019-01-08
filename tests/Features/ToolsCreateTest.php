@@ -22,11 +22,12 @@ class ToolsCreateTest extends TestCase
         ]);
 
         $response->assertResponseStatus(201);
-        $response->seeJsonStructure(['title', 'link', 'description']);
+        $response->seeJsonStructure(['title', 'link', 'description', 'tags']);
         $response->seeJsonContains([
             'title' => $tool->getAttribute('title'),
             'link' => $tool->getAttribute('link'),
             'description' => $tool->getAttribute('description'),
+            'tags' => $tool->tags()->pluck('name')->toArray(),
         ]);
     }
 
@@ -43,6 +44,9 @@ class ToolsCreateTest extends TestCase
         ]);
 
         $response->assertResponseStatus(201);
+        $response->seeJsonContains([
+            'tags' => ['amazing', 'beautiful'],
+        ]);
         $this->assertEquals(['amazing', 'beautiful'], Tool::first()->tags()->pluck('name')->toArray());
     }
 }
