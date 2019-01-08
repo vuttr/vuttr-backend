@@ -14,7 +14,7 @@ trait Uuid
      */
     public static function bootUuid()
     {
-        static::creating(function (self $model) {
+        static::creating(function ($model) {
             $model->{$model->getKeyName()} = static::generateUuid();
         });
     }
